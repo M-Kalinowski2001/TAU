@@ -1,4 +1,4 @@
-name: Basic validation
+name: Java Tests
 
 on:
   push:
@@ -6,17 +6,21 @@ on:
       - main
 
 jobs:
-  compile:
-    runs-on: ubuntu-20.04
-    name: Java 11 compile
+  test:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
-          architecture: x64
-          java-version: 11
-      - name: Run the Maven verify phase
-        run: mvn --batch-mode --update-snapshots verify
+          java-version: '11' # You can specify the Java version you need
+
+      - name: Build with Maven
+        run: mvn -B package --file LAB 3/game/pom.xml
+
+      - name: Run Tests
+        run: mvn -B test --file LAB 3/game/pom.xml
+
