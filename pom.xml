@@ -12,8 +12,6 @@
     <url>http://maven.apache.org</url>
     <modules>
       <module>LAB1</module>
-      <module>LAB 2</module>
       <module>LAB 3</module>
-      <module>LAB 4</module>
   </modules>
 </project>
