@@ -26,7 +26,7 @@ public class SimpleGame {
         placeObstacles();
         placePlayer();
         startTime = Instant.now();
-        currentPoints = 100; // Start with zero points
+        currentPoints = 100;
         moveCount = 0;
         System.out.println("Welcome! Your goal is to reach point B marked on the game board :)");
         System.out.println("Scoring system:");
@@ -48,12 +48,10 @@ public class SimpleGame {
     private void placeStartAndStop() {
         Random random = new Random();
 
-        // Place START
         startX = random.nextInt(board.length);
         startY = random.nextInt(board[0].length);
         board[startX][startY] = START;
-
-        // Place STOP
+        
         do {
             stopX = random.nextInt(board.length);
             stopY = random.nextInt(board[0].length);
@@ -64,12 +62,11 @@ public class SimpleGame {
 
     private void placeObstacles() {
         Random random = new Random();
-        int obstacleCount = board.length * board[0].length / 4; // Adjust the obstacle density
+        int obstacleCount = board.length * board[0].length / 4;
 
         for (int i = 0; i < obstacleCount; i++) {
             int obstacleX, obstacleY;
 
-            // Place obstacle, ensuring it's not at START, STOP, or another obstacle
             do {
                 obstacleX = random.nextInt(board.length);
                 obstacleY = random.nextInt(board[0].length);
@@ -97,7 +94,7 @@ public class SimpleGame {
     }
 
     public void move(String direction) {
-        board[playerX][playerY] = EMPTY; // Clear current position
+        board[playerX][playerY] = EMPTY;
     
         switch (direction.toLowerCase()) {
             case "up":
@@ -154,11 +151,9 @@ public class SimpleGame {
                 return;
         }
         if (shouldExit) {
-            // Exit the method without calling System.exit(0)
             return;
         }
-    
-        // Check if the player reached the STOP point
+
         if (playerX == stopX && playerY == stopY) {
             Instant endTime = Instant.now();
             Duration duration = Duration.between(startTime, endTime);
@@ -167,7 +162,7 @@ public class SimpleGame {
             int timePoints = Math.min((int) (seconds / 2), 50);
             currentPoints = startingPoints - timePoints;
     
-            currentPoints -= (moveCount / 2); // Deduct points for moves
+            currentPoints -= (moveCount / 2);
             currentPoints = Math.max(currentPoints, 0);
     
             System.out.println("Congratulations! You reached the destination.");
@@ -181,14 +176,11 @@ public class SimpleGame {
             System.exit(0);
         }
     
-        // Update new position
         board[playerX][playerY] = PLAYER;
-    
-        // Subtract points for each move
+
         moveCount++;
         currentPoints = Math.max(currentPoints - 1, 0);
     
-        // Check if the player reached the STOP point
         if (playerX == stopX && playerY == stopY) {
             Instant endTime = Instant.now();
             Duration duration = Duration.between(startTime, endTime);
@@ -197,7 +189,7 @@ public class SimpleGame {
             int timePoints = Math.min((int) (seconds / 2), 50);
             currentPoints = startingPoints - timePoints;
     
-            currentPoints -= (moveCount / 2); // Deduct points for moves
+            currentPoints -= (moveCount / 2);
             currentPoints = Math.max(currentPoints, 0);
     
             System.out.println("Congratulations! You reached the destination.");
@@ -210,11 +202,9 @@ public class SimpleGame {
     
             System.exit(0);
         }
-    
-        // Update new position
+
         board[playerX][playerY] = PLAYER;
     
-        // Subtract points for each move
         moveCount++;
     }
     private void displayGrade(int points) {
